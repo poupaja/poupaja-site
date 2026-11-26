@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TikTok Authorization Callback — PoupaJá Portugal</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 32px; max-width: 600px; width: 90%; }
+    code { display: block; background: #0f172a; padding: 14px; border-radius: 8px; word-break: break-all; margin: 16px 0; color: #fde047; }
+    button { background: #2563eb; color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>PoupaJá Portugal — TikTok OAuth Callback</h1>
+    <p id="status">Waiting for TikTok authorization code...</p>
+    <code id="codeBox">No code parameter in URL.</code>
+    <button onclick="navigator.clipboard.writeText(document.getElementById('codeBox').textContent)">Copy Code</button>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const err = params.get('error_description') || params.get('error');
+    if (code) {
+      document.getElementById('status').textContent = 'Authorization successful! Copy your code below:';
+      document.getElementById('codeBox').textContent = code;
+    } else if (err) {
+      document.getElementById('status').textContent = 'Authorization error:';
+      document.getElementById('codeBox').textContent = err;
+    }
+  </script>
+</body>
+</html>
